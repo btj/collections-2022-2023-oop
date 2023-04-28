@@ -96,5 +96,10 @@ public class LinkedList implements List {
 		n.next.previous = n.previous;
 		size--;
 	}
+	
+	@Override
+	public void set(int index, Object element) {
+		getNode(index).element = element;
+	}
 
 }

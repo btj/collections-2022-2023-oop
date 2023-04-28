@@ -38,5 +38,14 @@ public interface Set {
 	 *       |     e.equals(element) || Arrays.stream(old(toArray())).anyMatch(e1 -> e1.equals(e)))
 	 */
 	void add(Object element);
+	
+	/**
+	 * @pre | element != null
+	 * @mutates | this
+	 * @post | !contains(element)
+	 * @post | Arrays.stream(old(toArray())).allMatch(e -> e.equals(element) || contains(e))
+	 * @post | stream().allMatch(e -> Arrays.stream(old(toArray())).anyMatch(e1 -> e1.equals(e)))
+	 */
+	void remove(Object element);
 
 }

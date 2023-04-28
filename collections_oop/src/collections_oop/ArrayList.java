@@ -63,5 +63,10 @@ public class ArrayList implements List {
 		System.arraycopy(elements, index + 1, elements, index, --size - index);
 		elements[size] = null;
 	}
+	
+	@Override
+	public void set(int index, Object element) {
+		elements[index] = element;
+	}
 
 }

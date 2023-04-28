@@ -1,6 +1,7 @@
 package collections_oop;
 
 import java.util.Arrays;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public interface List {
@@ -37,6 +38,19 @@ public interface List {
 	
 	/**
 	 * @pre | element != null
+	 * @inspects | this
+	 * @post | result ==
+	 *       | IntStream.range(0, size()).filter(i -> get(i).equals(element)).findFirst().orElse(-1)
+	 */
+	default int indexOf(Object element) {
+		for (int i = 0; i < size(); i++)
+			if (get(i).equals(element))
+				return i;
+		return -1;
+	}
+	
+	/**
+	 * @pre | element != null
 	 * @mutates | this
 	 * @post | size() == old(size()) + 1
 	 * @post | Arrays.equals(toArray(), 0, old(size()), old(toArray()), 0, old(size()))
@@ -62,5 +76,21 @@ public interface List {
 	 * @post | Arrays.equals(toArray(), index, size(), old(toArray()), index + 1, size() + 1)
 	 */
 	void remove(int index);
+	
+	default void remove(Object element) {
+		int index = indexOf(element);
+		if (index != -1)
+			remove(index);
+	}
+	
+	/**
+	 * @pre | 0 <= index && index < size()
+	 * @pre | element != null
+	 * @mutates | this
+	 * @post | size() == old(size())
+	 * @post | IntStream.range(0, size())
+	 *       |          .allMatch(i -> get(i) == (i == index ? element : old(toArray())[i]))
+	 */
+	void set(int index, Object element);
 
 }
